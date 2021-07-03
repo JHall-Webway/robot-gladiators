@@ -8,9 +8,9 @@ var enemyHealth = 50;
 var enemyAttack = 12;
 
 console.log(enemyNames);
-console.log(enemyNames.length);
-console.log(enemyNames[0]);
-console.log(enemyNames[3]);
+for(var i = 0; i < enemyNames.length; i++) {
+    console.log(enemyNames[i]);
+}
 
 // fight function (now with parameter for enemy's name)
 var fight = function (enemyName) {
@@ -27,14 +27,14 @@ var fight = function (enemyName) {
             if (confirmSkip) {
                 window.alert(playerName + ' has decided to skip this fight. Goodbye!');
                 // subtract money from playerMoney for skipping
-                playerMoney = playerMoney - 10;
+                playerMoney = Math.max(0, playerMoney - 10);
                 console.log("playerMoney", playerMoney);
                 break;
             }
         }
 
         // remove enemy's health by subtracting the amount set in the playerAttack variable
-        enemyHealth = enemyHealth - playerAttack;
+        enemyHealth = Math.max(0, enemyHealth - playerAttack);
         console.log(
             playerName + ' attacked ' + enemyName + '. ' + enemyName + ' now has ' + enemyHealth + ' health remaining.'
         );
@@ -52,7 +52,7 @@ var fight = function (enemyName) {
         }
 
         // remove players's health by subtracting the amount set in the enemyAttack variable
-        playerHealth = playerHealth - enemyAttack;
+        playerHealth = Math.max(0, playerHealth - enemyAttack);
         console.log(
             enemyName + ' attacked ' + playerName + '. ' + playerName + ' now has ' + playerHealth + ' health remaining.'
         );
@@ -71,9 +71,7 @@ var fight = function (enemyName) {
 // fight each enemy-robot by looping over them and fighting them one at a time
 var startGame = function () {
 
-    playerHealth = 100;
-    playerAttack = 10;
-    playerMoney = 10;
+    enemyHealth = Math.floor(Math.random() * 21) + 40;
     for (var i = 0; i < enemyNames.length; i++) {
         // if player is still alive, keep fighting
         if (playerHealth > 0) {
